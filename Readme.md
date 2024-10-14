@@ -1,0 +1,1 @@
+Ouvrir le fichier HTML, sélectionner un ou plusieurs fichiers audio et s'amuser avec le stéréo :D !
