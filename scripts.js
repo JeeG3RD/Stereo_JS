@@ -20,11 +20,11 @@ function onSelectionFichiers(event) {
 
     // Boucle sur les fichiers s lectionn s
     for (let i = 0; i < fichiers.length; i++) {
-        const file = fichiers[i];
-        const url = URL.createObjectURL(file);
+        const fichier = fichiers[i];
+        const url = URL.createObjectURL(fichier);
 
-        // Cr e un lecteur audio pour chaque fichier
-        createAudioPlayer(url, file.name);
+        // Cree un lecteur audio pour chaque fichier
+        createAudioPlayer(url, fichier.name);
     }
 }
 
@@ -32,24 +32,25 @@ function onSelectionFichiers(event) {
  * Crée un élément audio et un AudioContext associé pour gérer la stéréo
  * 
  * @param {string} url - URL du fichier audio
- * @param {string} fileName - Nom du fichier audio
+ * @param {string} nomFichier - Nom du fichier audio
  */
-function createAudioPlayer(url, fileName) {
+function createAudioPlayer(url, nomFichier) {
   // Container 'global' pour chaque fichier;
   const audioContainer = document.createElement('div');
-  audioContainer.classList.add('audio-container');
 
   const audio = new Audio(url);
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
   const source = audioContext.createMediaElementSource(audio);
   const panner = audioContext.createStereoPanner();
 
-  // Connecte le lecteur audio au contexte
+  // Connecte le lecteur audio au contexte;
   source.connect(panner).connect(audioContext.destination);
 
-  // Cr e des contr les pour le lecteur audio
+  // Crée un bouton pour la lecture de l'audio;
   const playPauseButton = document.createElement('button');
   playPauseButton.textContent = 'Play';
+  
+  // Ajoute un listener sur le click pour la lecture de l'audio;
   playPauseButton.addEventListener('click', () => {
       if (audio.paused) {
           audio.play();
@@ -73,15 +74,15 @@ function createAudioPlayer(url, fileName) {
       panner.pan.value = stereoControl.value;
   });
 
-  // Créé un div pour insérer le bouton play et le range
+  // Créé un div pour insérer le bouton play et le range;
   const controls = document.createElement('div');
   controls.classList.add('controls');
   controls.appendChild(playPauseButton);
   controls.appendChild(stereoControl);
 
-  // Ajout du nom du fichier
+  // Ajout du nom du fichier;
   const fileLabel = document.createElement('p');
-  fileLabel.textContent = fileName;
+  fileLabel.textContent = nomFichier;
 
   // Ajout à la page;
   audioContainer.appendChild(fileLabel);
